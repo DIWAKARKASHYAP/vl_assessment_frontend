@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { Mail, Lock, User, Building2, Users, Loader2, AlertCircle } from "lucide-react";
 import { BACKEND_URL } from "../../global";
 
 export default function Signup() {
@@ -43,8 +44,8 @@ export default function Signup() {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      if (data.user.role === "supplier") navigate("/my-listings");
-      else navigate("/listings");
+      if (data.user.role === "supplier") window.location.href = "/my-listings"
+      else  window.location.href = "/listings";
 
     } catch (err) {
       setError("Something went wrong");
@@ -54,98 +55,165 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-10">
-      <div className="w-full max-w-xl bg-white shadow-2xl rounded-2xl p-8 md:p-10 border border-gray-200">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50 flex items-center justify-center px-4 py-10">
 
-        {/* Title */}
-        <h1 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-6">
-          Create an Account
-        </h1>
+      {/* Decorative background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-100/30 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+      </div>
 
-        {error && (
-          <div className="bg-red-100 text-red-700 p-3 rounded-lg mb-4 text-center shadow">
-            {error}
-          </div>
-        )}
+      <div className="relative w-full max-w-lg">
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <div className="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-xl p-8 md:p-10">
+          
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2 justify-center mb-8">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center shadow-md">
+              <Users className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h2 className="text-lg font-black text-gray-900">B2B</h2>
+              <p className="text-xs text-gray-600 -mt-1">Marketplace</p>
+            </div>
+          </Link>
 
-          {/* Username */}
-          <div>
-            <label className="block font-semibold mb-1 text-gray-700">Username</label>
-            <input
-              type="text"
-              name="username"
-              className="w-full border border-gray-300 focus:border-sky-500 focus:ring-sky-500 p-3 rounded-lg shadow-sm transition-all"
-              value={form.username}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          {/* Title */}
+          <h1 className="text-3xl md:text-4xl font-black text-center text-gray-900 mb-6">
+            Create an Account
+          </h1>
 
-          {/* Email */}
-          <div>
-            <label className="block font-semibold mb-1 text-gray-700">Email</label>
-            <input
-              type="email"
-              name="email"
-              className="w-full border border-gray-300 focus:border-sky-500 focus:ring-sky-500 p-3 rounded-lg shadow-sm transition-all"
-              value={form.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          {/* Error Alert */}
+          {error && (
+            <div className="bg-red-50 border border-red-300 rounded-lg p-4 mb-6 flex gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-red-800 font-semibold text-sm">Signup Error</p>
+                <p className="text-red-700 text-sm">{error}</p>
+              </div>
+            </div>
+          )}
 
-          {/* Password */}
-          <div>
-            <label className="block font-semibold mb-1 text-gray-700">Password</label>
-            <input
-              type="password"
-              name="password"
-              className="w-full border border-gray-300 focus:border-sky-500 focus:ring-sky-500 p-3 rounded-lg shadow-sm transition-all"
-              value={form.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-5">
 
-          {/* Company */}
-          <div>
-            <label className="block font-semibold mb-1 text-gray-700">Company Name</label>
-            <input
-              type="text"
-              name="company_name"
-              className="w-full border border-gray-300 focus:border-sky-500 focus:ring-sky-500 p-3 rounded-lg shadow-sm transition-all"
-              value={form.company_name}
-              onChange={handleChange}
-              required
-            />
-          </div>
+            {/* Username */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Username</label>
+              <div className="relative">
+                <User className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Enter username"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all bg-gray-50 focus:bg-white"
+                  value={form.username}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
 
-          {/* Role Select */}
-          <div>
-            <label className="block font-semibold mb-1 text-gray-700">Account Type</label>
-            <select
-              name="role"
-              className="w-full border border-gray-300 focus:border-sky-500 focus:ring-sky-500 p-3 rounded-lg shadow-sm transition-all bg-white"
-              value={form.role}
-              onChange={handleChange}
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all bg-gray-50 focus:bg-white"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="••••••••"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all bg-gray-50 focus:bg-white"
+                  value={form.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Company Name */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Company Name</label>
+              <div className="relative">
+                <Building2 className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+                <input
+                  type="text"
+                  name="company_name"
+                  placeholder="Your company name"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all bg-gray-50 focus:bg-white"
+                  value={form.company_name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Role Select */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Account Type</label>
+              <div className="relative">
+                <Users className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+                <select
+                  name="role"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
+                  value={form.role}
+                  onChange={handleChange}
+                >
+                  <option value="buyer">Buyer</option>
+                  <option value="supplier">Supplier</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 active:from-blue-700 active:to-cyan-700 text-white font-bold py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50"
             >
-              <option value="buyer">Buyer</option>
-              <option value="supplier">Supplier</option>
-            </select>
+              {loading ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Creating Account...
+                </>
+              ) : (
+                "Sign Up"
+              )}
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="flex items-center gap-3 my-6">
+            <div className="flex-1 border-t border-gray-200"></div>
+            <span className="text-gray-600 text-sm font-medium">Already have an account?</span>
+            <div className="flex-1 border-t border-gray-200"></div>
           </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 rounded-lg shadow-md transition-all disabled:opacity-50"
+          {/* Login Link */}
+          <Link
+            to="/login"
+            className="w-full block text-center px-4 py-3 border-2 border-gray-200 text-gray-700 font-semibold rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all"
           >
-            {loading ? "Creating Account..." : "Sign Up"}
-          </button>
-
-        </form>
+            Sign In
+          </Link>
+        </div>
       </div>
     </div>
   );
