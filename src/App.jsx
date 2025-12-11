@@ -7,9 +7,10 @@ import MyListings from "./pages/MyListings";
 import Requests from "./pages/Requests";
 import Listings from "./pages/Listings";
 import MyOrders from "./pages/MyOrders";
+import Home from './pages/Home'
 
 // Placeholder pages (you will create real ones later)
-const Home = () => <div className="page-container"><h1 className="text-3xl font-bold">Home</h1></div>;
+// const Home = () => <div className="page-container"><h1 className="text-3xl font-bold">Home</h1></div>;
 
 
 

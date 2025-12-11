@@ -37,11 +37,9 @@ export default function Login() {
         return;
       }
 
-      // Save token + user
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      // Redirect based on role
       if (data.user.role === "supplier") navigate("/my-listings");
       else navigate("/listings");
 
@@ -53,54 +51,62 @@ export default function Login() {
   };
 
   return (
-    <div className="page-container max-w-md mx-auto py-10">
-      <h1 className="text-3xl font-bold mb-6 text-center">Login</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-10">
+      <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8 md:p-10 border border-gray-200">
 
-      <form
-        onSubmit={handleSubmit}
-        className="page-card space-y-4"
-      >
+        {/* Title */}
+        <h1 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-6">
+          Login
+        </h1>
+
+        {/* Error Box */}
         {error && (
-          <div className="bg-red-100 text-red-700 p-3 rounded text-center">
+          <div className="bg-red-100 text-red-700 p-3 rounded-lg mb-4 text-center shadow">
             {error}
           </div>
         )}
 
-        {/* Email */}
-        <div>
-          <label className="block font-medium">Email</label>
-          <input
-            type="email"
-            name="email"
-            className="w-full border p-2 rounded mt-1"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
 
-        {/* Password */}
-        <div>
-          <label className="block font-medium">Password</label>
-          <input
-            type="password"
-            name="password"
-            className="w-full border p-2 rounded mt-1"
-            value={form.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          {/* Email */}
+          <div>
+            <label className="block font-semibold mb-1 text-gray-700">Email</label>
+            <input
+              type="email"
+              name="email"
+              className="w-full border border-gray-300 focus:border-sky-500 focus:ring-sky-500 p-3 rounded-lg shadow-sm transition-all"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {/* Submit */}
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 rounded"
-        >
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
+          {/* Password */}
+          <div>
+            <label className="block font-semibold mb-1 text-gray-700">Password</label>
+            <input
+              type="password"
+              name="password"
+              className="w-full border border-gray-300 focus:border-sky-500 focus:ring-sky-500 p-3 rounded-lg shadow-sm transition-all"
+              value={form.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 rounded-lg shadow-md transition-all disabled:opacity-50"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+
+        </form>
+
+      </div>
     </div>
   );
 }

@@ -24,80 +24,117 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-md px-6 py-4 flex items-center justify-between">
-      <h1 className="text-2xl font-bold text-sky-600">B2B Marketplace</h1>
+    <nav className="bg-white shadow-lg px-6 md:px-12 py-4 sticky top-0 z-50 flex items-center justify-between">
+
+      {/* Logo */}
+      <h1 className="text-3xl font-extrabold text-sky-600 tracking-wide cursor-pointer">
+        B2B<span className="text-gray-800">Market</span>
+      </h1>
 
       {/* Desktop Menu */}
-      <div className="hidden md:flex gap-6 text-gray-700 font-medium">
+      <div className="hidden md:flex gap-8 text-gray-700 font-medium items-center">
 
         {!loggedIn && (
           <>
-            <Link to="/login" className="hover:text-sky-600">Login</Link>
-            <Link to="/signup" className="hover:text-sky-600">Signup</Link>
+            <Link className="hover:text-sky-600 transition-all" to="/login">
+              Login
+            </Link>
+            <Link
+              className="px-4 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700 shadow-md transition-all"
+              to="/signup"
+            >
+              Signup
+            </Link>
           </>
         )}
 
         {loggedIn && role === "supplier" && (
           <>
-            <Link to="/my-listings" className="hover:text-sky-600">My Listings</Link>
-            <Link to="/requests" className="hover:text-sky-600">Requests</Link>
+            <Link className="hover:text-sky-600 transition-all" to="/my-listings">
+              My Listings
+            </Link>
+            <Link className="hover:text-sky-600 transition-all" to="/requests">
+              Requests
+            </Link>
           </>
         )}
 
         {loggedIn && role === "buyer" && (
           <>
-            <Link to="/listings" className="hover:text-sky-600">Listings</Link>
-            <Link to="/my-orders" className="hover:text-sky-600">My Orders</Link>
+            <Link className="hover:text-sky-600 transition-all" to="/listings">
+              Listings
+            </Link>
+            <Link className="hover:text-sky-600 transition-all" to="/my-orders">
+              My Orders
+            </Link>
           </>
         )}
 
         {loggedIn && (
           <button
             onClick={logout}
-            className="text-red-500 font-semibold hover:text-red-700"
+            className="px-3 py-1.5 rounded-lg text-red-500 font-semibold hover:bg-red-100 transition-all"
           >
             Logout
           </button>
         )}
       </div>
 
-      {/* Mobile Toggle */}
+      {/* Mobile Toggle Button */}
       <button
-        className="md:hidden"
+        className="md:hidden text-3xl text-gray-700"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="text-3xl">☰</span>
+        ☰
       </button>
 
-      {/* Mobile Dropdown */}
+      {/* Mobile Menu */}
       {isOpen && (
-        <div className="absolute top-16 left-0 w-full bg-white shadow-md flex flex-col items-center py-4 gap-4 md:hidden">
+        <div className="absolute top-16 left-0 w-full bg-white shadow-xl py-6 flex flex-col items-center gap-4 md:hidden animate-slideDown">
 
           {!loggedIn && (
             <>
-              <Link to="/login" className="hover:text-sky-600">Login</Link>
-              <Link to="/signup" className="hover:text-sky-600">Signup</Link>
+              <Link className="hover:text-sky-600 transition-all" to="/login">
+                Login
+              </Link>
+
+              <Link
+                className="px-4 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700 shadow-md transition-all"
+                to="/signup"
+              >
+                Signup
+              </Link>
             </>
           )}
 
           {loggedIn && role === "supplier" && (
             <>
-              <Link to="/my-listings" className="hover:text-sky-600">My Listings</Link>
-              <Link to="/requests" className="hover:text-sky-600">Requests</Link>
+              <Link className="hover:text-sky-600 transition-all" to="/my-listings">
+                My Listings
+              </Link>
+
+              <Link className="hover:text-sky-600 transition-all" to="/requests">
+                Requests
+              </Link>
             </>
           )}
 
           {loggedIn && role === "buyer" && (
             <>
-              <Link to="/listings" className="hover:text-sky-600">Listings</Link>
-              <Link to="/my-orders" className="hover:text-sky-600">My Orders</Link>
+              <Link className="hover:text-sky-600 transition-all" to="/listings">
+                Listings
+              </Link>
+
+              <Link className="hover:text-sky-600 transition-all" to="/my-orders">
+                My Orders
+              </Link>
             </>
           )}
 
           {loggedIn && (
             <button
               onClick={logout}
-              className="text-red-500 font-semibold hover:text-red-700"
+              className="px-3 py-1.5 rounded-lg text-red-500 font-semibold hover:bg-red-100 transition-all"
             >
               Logout
             </button>

@@ -10,7 +10,7 @@ export default function Signup() {
     email: "",
     password: "",
     company_name: "",
-    role: "buyer", // default
+    role: "buyer",
   });
 
   const [loading, setLoading] = useState(false);
@@ -40,11 +40,9 @@ export default function Signup() {
         return;
       }
 
-      // Save token + user
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      // Redirect based on role
       if (data.user.role === "supplier") navigate("/my-listings");
       else navigate("/listings");
 
@@ -56,94 +54,99 @@ export default function Signup() {
   };
 
   return (
-    <div className="page-containe m-auto max-w-2xl">
-      <h1 className="text-3xl font-bold mb-6">Create an Account</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-10">
+      <div className="w-full max-w-xl bg-white shadow-2xl rounded-2xl p-8 md:p-10 border border-gray-200">
 
-      <form
-        onSubmit={handleSubmit}
-        className="page-card max-w-xl space-y-4"
-      >
+        {/* Title */}
+        <h1 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-6">
+          Create an Account
+        </h1>
+
         {error && (
-          <div className="bg-red-100 text-red-700 p-3 rounded">
+          <div className="bg-red-100 text-red-700 p-3 rounded-lg mb-4 text-center shadow">
             {error}
           </div>
         )}
 
-        {/* Username */}
-        <div>
-          <label className="block font-medium">Username</label>
-          <input
-            type="text"
-            name="username"
-            className="w-full border p-2 rounded mt-1"
-            value={form.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="space-y-5">
 
-        {/* Email */}
-        <div>
-          <label className="block font-medium">Email</label>
-          <input
-            type="email"
-            name="email"
-            className="w-full border p-2 rounded mt-1"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          {/* Username */}
+          <div>
+            <label className="block font-semibold mb-1 text-gray-700">Username</label>
+            <input
+              type="text"
+              name="username"
+              className="w-full border border-gray-300 focus:border-sky-500 focus:ring-sky-500 p-3 rounded-lg shadow-sm transition-all"
+              value={form.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {/* Password */}
-        <div>
-          <label className="block font-medium">Password</label>
-          <input
-            type="password"
-            name="password"
-            className="w-full border p-2 rounded mt-1"
-            value={form.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          {/* Email */}
+          <div>
+            <label className="block font-semibold mb-1 text-gray-700">Email</label>
+            <input
+              type="email"
+              name="email"
+              className="w-full border border-gray-300 focus:border-sky-500 focus:ring-sky-500 p-3 rounded-lg shadow-sm transition-all"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {/* Company Name */}
-        <div>
-          <label className="block font-medium">Company Name</label>
-          <input
-            type="text"
-            name="company_name"
-            className="w-full border p-2 rounded mt-1"
-            value={form.company_name}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          {/* Password */}
+          <div>
+            <label className="block font-semibold mb-1 text-gray-700">Password</label>
+            <input
+              type="password"
+              name="password"
+              className="w-full border border-gray-300 focus:border-sky-500 focus:ring-sky-500 p-3 rounded-lg shadow-sm transition-all"
+              value={form.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {/* Role select */}
-        <div>
-          <label className="block font-medium">Account Type</label>
-          <select
-            name="role"
-            className="w-full border p-2 rounded mt-1"
-            value={form.role}
-            onChange={handleChange}
+          {/* Company */}
+          <div>
+            <label className="block font-semibold mb-1 text-gray-700">Company Name</label>
+            <input
+              type="text"
+              name="company_name"
+              className="w-full border border-gray-300 focus:border-sky-500 focus:ring-sky-500 p-3 rounded-lg shadow-sm transition-all"
+              value={form.company_name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* Role Select */}
+          <div>
+            <label className="block font-semibold mb-1 text-gray-700">Account Type</label>
+            <select
+              name="role"
+              className="w-full border border-gray-300 focus:border-sky-500 focus:ring-sky-500 p-3 rounded-lg shadow-sm transition-all bg-white"
+              value={form.role}
+              onChange={handleChange}
+            >
+              <option value="buyer">Buyer</option>
+              <option value="supplier">Supplier</option>
+            </select>
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 rounded-lg shadow-md transition-all disabled:opacity-50"
           >
-            <option value="buyer">Buyer</option>
-            <option value="supplier">Supplier</option>
-          </select>
-        </div>
+            {loading ? "Creating Account..." : "Sign Up"}
+          </button>
 
-        {/* Submit */}
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 rounded"
-        >
-          {loading ? "Creating Account..." : "Sign Up"}
-        </button>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }
